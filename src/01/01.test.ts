@@ -1,9 +1,9 @@
-import { readFile } from "fs/promises";
-import { resolve } from "path";
+import { readFile } from "src/helpers";
 import { expect, test } from "vitest";
 import { solvePartOne, solvePartTwo } from "./01";
 
-const input = await (await readFile(resolve(__dirname, "./01.example.txt"))).toString("utf-8");
+const input = await readFile("example", 1);
+
 test("part one", () => {
   expect(solvePartOne(input)).toEqual(24000);
 });
