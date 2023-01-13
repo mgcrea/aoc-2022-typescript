@@ -1,4 +1,9 @@
 import { inspect as baseInspect } from "util";
+declare global {
+  interface ImportMeta {
+    vitest: boolean;
+  }
+}
 
 const inspect = (unknown: unknown) =>
   baseInspect(unknown, {

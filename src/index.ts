@@ -1,9 +1,7 @@
-import { fileURLToPath } from "node:url";
-import { createServer } from "./server";
+export * from "./01/01";
 
-export const server = await createServer();
-
-export default server.handler;
-
-const isMain = process.argv[1] === fileURLToPath(import.meta.url);
-await server.start(isMain);
+declare global {
+  interface ImportMeta {
+    vitest: boolean;
+  }
+}

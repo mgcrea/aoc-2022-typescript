@@ -13,5 +13,5 @@
   "ts-node": {
     "swc": true
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", ".idea/day_1.test.ts"]
 }
