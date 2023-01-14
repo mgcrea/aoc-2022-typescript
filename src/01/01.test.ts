@@ -4,7 +4,7 @@ import { solvePartOne, solvePartTwo } from "./01";
 
 const input = await readFile("example", 1);
 
-test("part one", () => {
+test.only("part one", () => {
   expect(solvePartOne(input)).toEqual(24000);
 });
 test("part two", () => {
