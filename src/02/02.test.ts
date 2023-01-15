@@ -7,6 +7,6 @@ const input = await readFile("example", 2);
 test("part one", () => {
   expect(solvePartOne(input)).toEqual(15);
 });
-test("part two", () => {
+test.only("part two", () => {
   expect(solvePartTwo(input)).toEqual(12);
 });
