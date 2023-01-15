@@ -10,7 +10,7 @@ const parseInput = (input: string, safe?: boolean): Input =>
       value
         .split("\n")
         .filter(safe ? (line) => line.match(/^[0-9]*$/) : Boolean)
-        .map((v) => parseInt(v))
+        .map(Number)
     );
 
 export const solvePartOne = (input: string) =>

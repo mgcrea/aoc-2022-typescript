@@ -7,7 +7,8 @@ const folders = (await readdir("./src", { withFileTypes: true }))
   .filter((entry) => entry.isDirectory())
   .map(({ name }) => name);
 
-const ROUNDS = process.env["ROUNDS"] ? parseInt(process.env["ROUNDS"]) : 1;
+const ROUNDS = process.env["ROUNDS"] ? Number(process.env["ROUNDS"]) : 1;
+const DAY = process.env["DAY"] ? Number(process.env["DAY"]) : undefined;
 
 const run = <T extends unknown[], U>(fn: (...args: T) => U, ...args: T): void => {
   ROUNDS > 1 ? logBench(...bench(fn, ROUNDS, ...args)) : logPerf(...perf(fn, ...args));
@@ -40,11 +41,9 @@ const logBench = (result: unknown, number: number, rounds: number) => {
   console.log(result, `(elapsed: ~${(number / rounds).toFixed(2)}µs for ${rounds} rounds)`);
 };
 
-const filterDays: number[] = [3];
-
 for (const date of folders) {
-  const day = parseInt(date);
-  if (filterDays.length && !filterDays.includes(day)) {
+  const day = Number(date);
+  if (DAY && DAY !== day) {
     continue;
   }
   const input = await readFile("input", day);
