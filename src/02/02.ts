@@ -1,11 +1,13 @@
+// day 02
+
 type Move = 0 | 1 | 2;
 type Round = [Move, Move];
 type Input = Round[];
 
-const parseInput = (input: string, unsafe?: boolean): Input =>
+const parseInput = (input: string, safe?: boolean): Input =>
   input
     .split("\n")
-    .filter(unsafe ? Boolean : (line) => line.match(/^[ABC] [XYZ]$/))
+    .filter(safe ? (line) => line.match(/^[ABC] [XYZ]$/) : Boolean)
     .map((line) => [line.charCodeAt(0) - 65, line.charCodeAt(2) - 88]) as Input;
 
 const computeScore = ([a, b]: Round): number => {
@@ -27,7 +29,7 @@ export const solvePartTwo = (input: string) =>
     })
     .reduce(sum);
 
-// Helpers
+// helpers
 
 const sum = (a: number, b: number) => a + b;
 

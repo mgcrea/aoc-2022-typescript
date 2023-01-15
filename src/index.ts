@@ -5,8 +5,7 @@ import { readFile } from "./helpers";
 
 const folders = (await readdir("./src", { withFileTypes: true }))
   .filter((entry) => entry.isDirectory())
-  .map(({ name }) => name)
-  .slice(1);
+  .map(({ name }) => name);
 
 const ROUNDS = process.env["ROUNDS"] ? parseInt(process.env["ROUNDS"]) : 1;
 
@@ -41,7 +40,7 @@ const logBench = (result: unknown, number: number, rounds: number) => {
   console.log(result, `(elapsed: ~${(number / rounds).toFixed(2)}µs for ${rounds} rounds)`);
 };
 
-const filterDays: number[] = [];
+const filterDays: number[] = [3];
 
 for (const date of folders) {
   const day = parseInt(date);
@@ -60,3 +59,36 @@ for (const date of folders) {
     run(code.solvePartTwo, input);
   }
 }
+
+// const codeFileTemplate = (day: number) => {
+//   const date = String(day).padStart(2, "0");
+//   return `// day ${date}
+
+// export const solvePartOne = (input: string) => {
+//   return null;
+// };
+
+// export const solvePartTwo = (input: string) => {
+//   return null;
+// };
+// `;
+// };
+
+// const testFileTemplate = (day: number) => {
+//   const date = String(day).padStart(2, "0");
+//   return `// day ${date}
+
+// import { readFile } from "src/helpers";
+// import { expect, test } from "vitest";
+// import { solvePartOne, solvePartTwo } from "./${date}";
+
+// const input = await readFile("example", ${day});
+
+// test("part one", () => {
+//   expect(solvePartOne(input)).toEqual(null);
+// });
+// test("part two", () => {
+//   expect(solvePartTwo(input)).toEqual(null);
+// });
+//   `;
+// };
