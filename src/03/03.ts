@@ -4,7 +4,9 @@ const parseInput = (input: string, safe?: boolean): Input =>
   input
     .split("\n")
     .filter(safe ? (line) => line.match(/^[a-zA-Z]$/) : Boolean)
-    .map((line) => Array.from(line).map((char) => (char.charCodeAt(0) - 96 + 58) % 58));
+    .map((line) => Array.from(line).map((char) => scoreForChar(char.charCodeAt(0))));
+
+const scoreForChar = (code: number) => (code % 32) + 26 * Number(code <= 90);
 
 export const solvePartOne = (input: string) =>
   parseInput(input)
@@ -45,3 +47,15 @@ const intersect = <T extends number>(...sets: Set<T>[]): T | null => {
 const isNumber = (a: unknown): a is number => typeof a === "number" && !isNaN(a);
 
 const sum = (a: number, b: number) => a + b;
+
+// tests
+
+if (import.meta.vitest) {
+  const input = await readFile("example", 3);
+  test("part one", () => {
+    expect(solvePartOne(input)).toEqual(157);
+  });
+  test("part two", () => {
+    expect(solvePartTwo(input)).toEqual(70);
+  });
+}

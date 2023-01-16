@@ -1,6 +1,5 @@
 import { readdir } from "fs/promises";
 import { hrtime } from "node:process";
-import "./../test/setup";
 import { readFile } from "./helpers";
 
 const folders = (await readdir("./src", { withFileTypes: true }))
@@ -46,16 +45,20 @@ for (const date of folders) {
   if (DAY && DAY !== day) {
     continue;
   }
-  const input = await readFile("input", day);
-  const code = await import(`./${date}/${date}`);
-  console.log(`----------\n| Day ${date} |\n----------`);
-  if (code.solvePartOne) {
-    console.log(`🎄 Part 1 🎄`);
-    run(code.solvePartOne, input);
-  }
-  if (code.solvePartTwo) {
-    console.log(`🎄 Part 2 🎄`);
-    run(code.solvePartTwo, input);
+  try {
+    const input = await readFile("input", day);
+    const code = await import(`./${date}/${date}`);
+    console.log(`----------\n| Day ${date} |\n----------`);
+    if (code.solvePartOne) {
+      console.log(`🎄 Part 1 🎄`);
+      run(code.solvePartOne, input);
+    }
+    if (code.solvePartTwo) {
+      console.log(`🎄 Part 2 🎄`);
+      run(code.solvePartTwo, input);
+    }
+  } catch (err) {
+    d({ err });
   }
 }
 

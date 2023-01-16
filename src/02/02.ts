@@ -1,5 +1,3 @@
-// day 02
-
 type Move = 0 | 1 | 2;
 type Round = [Move, Move];
 type Input = Round[];
@@ -33,9 +31,19 @@ export const solvePartTwo = (input: string) =>
 
 const sum = (a: number, b: number) => a + b;
 
-const match = <T, U extends string | number | symbol = string | number | symbol>(
-  value: U,
-  map: Record<U, T>
-): T => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const match = <T, K extends keyof any = keyof any>(value: K, map: Record<K, T>): T => {
   return map[value];
 };
+
+// tests
+
+if (import.meta.vitest) {
+  const input = await readFile("example", 2);
+  test("part one", () => {
+    expect(solvePartOne(input)).toEqual(15);
+  });
+  test("part two", () => {
+    expect(solvePartTwo(input)).toEqual(12);
+  });
+}

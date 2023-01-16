@@ -1,9 +1,28 @@
 import { inspect as baseInspect } from "util";
+import { expect, test, TestAPI } from "vitest";
+import { readFile as readFileHelper } from "../src/helpers";
+
+// global test helpers
+
+declare global {
+  /* eslint-disable no-var */
+  var readFile: typeof readFileHelper;
+  var expect: Vi.ExpectStatic;
+  var test: TestAPI<unknown>;
+}
+globalThis.readFile = readFileHelper;
+globalThis.expect = expect;
+globalThis.test = test;
+
+// import.meta.vitest
+
 declare global {
   interface ImportMeta {
-    vitest: boolean;
+    vitest?: boolean;
   }
 }
+
+// debug tools
 
 const inspect = (unknown: unknown) =>
   baseInspect(unknown, {
