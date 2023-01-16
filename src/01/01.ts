@@ -1,3 +1,5 @@
+// day 01
+
 type Input = number[][];
 
 const parseInput = (input: string, safe?: boolean): Input =>

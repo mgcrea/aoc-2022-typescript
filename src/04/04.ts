@@ -1,4 +1,7 @@
-type Input = [[number, number], [number, number]][];
+// day 04
+
+type Range = [number, number];
+type Input = [Range, Range][];
 
 const parseInput = (input: string, safe?: boolean): Input =>
   input
@@ -7,38 +10,22 @@ const parseInput = (input: string, safe?: boolean): Input =>
     .map((line) => line.split(",").map((pair) => pair.split("-").map(Number))) as Input;
 
 export const solvePartOne = (input: string) =>
-  parseInput(input)
-    .map<number>(([a, b]) => {
-      const la = len(a);
-      const lb = len(b);
-      if (la === lb) {
-        return a[0] === b[0] ? 1 : 0;
-      } else if (la > lb) {
-        return b[0] >= a[0] && b[1] <= a[1] ? 1 : 0;
-      } else {
-        return a[0] >= b[0] && a[1] <= b[1] ? 1 : 0;
-      }
-    })
-    .reduce(sum);
+  parseInput(input).filter(([a, b]) => envelops(a, b)).length;
 
 export const solvePartTwo = (input: string) =>
-  parseInput(input)
-    .map<number>(([a, b]) => {
-      const la = len(a);
-      const lb = len(b);
-      if (la >= lb) {
-        return inside(b[0], a) || inside(b[1], a) ? 1 : 0;
-      } else {
-        return inside(a[0], b) || inside(a[1], b) ? 1 : 0;
-      }
-    })
-    .reduce(sum);
+  parseInput(input).filter(([a, b]) => overlaps(a, b)).length;
 
 // helpers
 
-const len = ([a, b]: [number, number]) => b - a;
-const sum = (a: number, b: number) => a + b;
-const inside = (a: number, [b, c]: [number, number]) => a >= b && b <= c;
+const len = ([a, b]: Range) => b - a;
+const envelops = (a: Range, b: Range): boolean => {
+  if (len(a) > len(b)) {
+    return b[0] >= a[0] && b[1] <= a[1];
+  } else {
+    return a[0] >= b[0] && a[1] <= b[1];
+  }
+};
+const overlaps = (a: Range, b: Range): boolean => Math.max(a[0], b[0]) <= Math.min(a[1], b[1]);
 
 // tests
 

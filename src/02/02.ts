@@ -1,3 +1,5 @@
+// day 02
+
 type Move = 0 | 1 | 2;
 type Round = [Move, Move];
 type Input = Round[];
