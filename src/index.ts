@@ -58,7 +58,7 @@ for (const date of folders) {
       run(code.solvePartTwo, input);
     }
   } catch (err) {
-    d({ err });
+    console.error(err);
   }
 }
 
