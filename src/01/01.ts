@@ -1,4 +1,4 @@
-// day 01
+const DAY = 1;
 
 type Input = number[][];
 
@@ -34,11 +34,11 @@ const max = (a: number, b: number) => (a > b ? a : b);
 // tests
 
 if (import.meta.vitest) {
-  const input = await readFile("example", 1);
-  test("part one", () => {
+  const input = await readFile("example", DAY);
+  test(`day #${DAY} part one`, () => {
     expect(solvePartOne(input)).toEqual(24000);
   });
-  test("part two", () => {
+  test(`day #${DAY} part two`, () => {
     expect(solvePartTwo(input)).toEqual(45000);
   });
 }

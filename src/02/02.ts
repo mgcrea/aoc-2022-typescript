@@ -1,4 +1,4 @@
-// day 02
+const DAY = 2;
 
 type Move = 0 | 1 | 2;
 type Round = [Move, Move];
@@ -41,11 +41,11 @@ const match = <T, K extends keyof any = keyof any>(value: K, map: Record<K, T>):
 // tests
 
 if (import.meta.vitest) {
-  const input = await readFile("example", 2);
-  test("part one", () => {
+  const input = await readFile("example", DAY);
+  test(`day #${DAY} part one`, () => {
     expect(solvePartOne(input)).toEqual(15);
   });
-  test("part two", () => {
+  test(`day #${DAY} part two`, () => {
     expect(solvePartTwo(input)).toEqual(12);
   });
 }

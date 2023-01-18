@@ -1,4 +1,4 @@
-// day 03
+const DAY = 3;
 
 type Input = number[][];
 
@@ -53,11 +53,11 @@ const sum = (a: number, b: number) => a + b;
 // tests
 
 if (import.meta.vitest) {
-  const input = await readFile("example", 3);
-  test("part one", () => {
+  const input = await readFile("example", DAY);
+  test(`day #${DAY} part one`, () => {
     expect(solvePartOne(input)).toEqual(157);
   });
-  test("part two", () => {
+  test(`day #${DAY} part two`, () => {
     expect(solvePartTwo(input)).toEqual(70);
   });
 }

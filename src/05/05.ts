@@ -1,10 +1,8 @@
-// day 05
+const DAY = 5;
 
 type Stack = number[];
-type StacksInput = Stack[];
 type Move = [number, number, number];
-type MovesInput = Move[];
-type Input = [StacksInput, MovesInput];
+type Input = [Stack[], Move[]];
 
 const parseInput = (input: string, safe?: boolean): Input => {
   const [stacks, moves] = input.split("\n\n");
@@ -12,7 +10,7 @@ const parseInput = (input: string, safe?: boolean): Input => {
   return [parseStacksInput(stacks!, safe), parseMovesInputs(moves!, safe)];
 };
 
-const parseStacksInput = (input: string, safe?: boolean): StacksInput => {
+const parseStacksInput = (input: string, safe?: boolean): Stack[] => {
   const [columns, ...stacksInput] = input.split("\n").reverse();
   const size = columns?.trim().split(/\s+/).length;
   const stacks = new Array(size).fill(null).map(() => [] as Stack);
@@ -30,7 +28,7 @@ const parseStacksInput = (input: string, safe?: boolean): StacksInput => {
     }, stacks);
 };
 
-const parseMovesInputs = (input: string, safe?: boolean): MovesInput =>
+const parseMovesInputs = (input: string, safe?: boolean): Move[] =>
   input
     .trim()
     .split("\n")
@@ -39,17 +37,17 @@ const parseMovesInputs = (input: string, safe?: boolean): MovesInput =>
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     .map((array) => [parseInt(array[1]!), parseInt(array[3]!) - 1, parseInt(array[5]!) - 1]);
 
-export const executeMove = (stacks: StacksInput, move: Move, multiple?: boolean) => {
-  const [number, from, to] = move;
+export const executeMove = (stacks: Stack[], move: Move, multiple?: boolean) => {
+  const [count, from, to] = move;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const fromStack = stacks[from]!;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const toStack = stacks[to]!;
-  const items = fromStack.splice(fromStack.length - number);
+  const items = fromStack.splice(fromStack.length - count);
   toStack.push(...(multiple ? items : items.reverse()));
 };
 
-const getTopOfStacksAsString = (stacks: StacksInput) =>
+const getTopOfStacksAsString = (stacks: Stack[]) =>
   stacks
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     .map((stack) => (stack.length ? String.fromCharCode(stack.pop()! + 65) : ""))
@@ -72,11 +70,11 @@ export const solvePartTwo = (input: string) => {
 // tests
 
 if (import.meta.vitest) {
-  const input = await readFile("example", 5);
-  test.only("part one", () => {
+  const input = await readFile("example", DAY);
+  test(`day #${DAY} part one`, () => {
     expect(solvePartOne(input)).toEqual("CMZ");
   });
-  test("part two", () => {
-    expect(solvePartTwo(input)).toEqual(null);
+  test(`day #${DAY} part two`, () => {
+    expect(solvePartTwo(input)).toEqual("MCD");
   });
 }

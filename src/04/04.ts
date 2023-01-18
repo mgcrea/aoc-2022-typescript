@@ -1,4 +1,4 @@
-// day 04
+const DAY = 4;
 
 type Range = [number, number];
 type Input = [Range, Range][];
@@ -30,11 +30,11 @@ const overlaps = (a: Range, b: Range): boolean => Math.max(a[0], b[0]) <= Math.m
 // tests
 
 if (import.meta.vitest) {
-  const input = await readFile("example", 4);
-  test.only("part one", () => {
+  const input = await readFile("example", DAY);
+  test(`day #${DAY} part one`, () => {
     expect(solvePartOne(input)).toEqual(2);
   });
-  test("part two", () => {
+  test(`day #${DAY} part two`, () => {
     expect(solvePartTwo(input)).toEqual(4);
   });
 }

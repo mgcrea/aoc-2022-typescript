@@ -1,4 +1,3 @@
-import { inspect as baseInspect } from "util";
 import { expect, test, TestAPI } from "vitest";
 import { readFile as readFileHelper } from "../src/helpers";
 
@@ -24,26 +23,26 @@ declare global {
 
 // debug tools
 
-const inspect = (unknown: unknown) =>
-  baseInspect(unknown, {
-    colors: true,
-    depth: 20,
-  });
+// const inspect = (unknown: unknown) =>
+//   baseInspect(unknown, {
+//     colors: true,
+//     depth: 20,
+//   });
 
-globalThis.d = (...args: unknown[]): void => {
-  const time = new Date().toISOString();
-  const output = inspect(args.length === 1 ? args[0] : args);
-  // console.warn(`🚨 ${chalk.white.bgRed(time)} - ${chalk.red("break")}: ${inspected}`);
-  console.warn(`\n${time} - ${output}`);
-};
+// globalThis.d = (...args: unknown[]): void => {
+//   const time = new Date().toISOString();
+//   const output = inspect(args.length === 1 ? args[0] : args);
+//   // console.warn(`🚨 ${chalk.white.bgRed(time)} - ${chalk.red("break")}: ${inspected}`);
+//   console.warn(`\n${time} - ${output}`);
+// };
 
-globalThis.i = <T>(value: T, index: number): T => {
-  d({ [index]: value });
-  return value;
-};
+// globalThis.i = <T>(value: T, index: number): T => {
+//   d({ [index]: value });
+//   return value;
+// };
 
-declare global {
-  /* eslint-disable no-var */
-  var d: (...args: unknown[]) => void;
-  var i: <T>(value: T, index: number) => T;
-}
+// declare global {
+//   /* eslint-disable no-var */
+//   var d: (...args: unknown[]) => void;
+//   var i: <T>(value: T, index: number) => T;
+// }

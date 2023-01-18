@@ -5,9 +5,14 @@
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "vitest"],
   "root": true,
   "rules": {
-    "no-fallthrough": "off"
+    "no-fallthrough": "off",
+    "vitest/no-focused-tests": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }
+    ]
   }
 }
