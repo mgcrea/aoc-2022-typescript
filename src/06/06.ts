@@ -8,22 +8,21 @@ const parseInput = (input: string, _safe?: boolean): Input =>
 const findMarkerIndex = (input: Input, size: number) => {
   const marker: number[] = [];
   let markerIndex = 0;
-  input.some((value, index) => {
+  for (let index = 0; index < input.length; index++) {
+    const value = input[index]!;
     if (!marker.includes(value)) {
       marker.push(value);
       if (marker.length === size) {
-        markerIndex = index;
-        return true;
+        markerIndex = index + 1;
+        break;
       }
     } else {
-      // markerInternalIndex = 0;
       const size = marker.indexOf(value) + 1;
       marker.splice(0, size);
       marker.push(value);
     }
-    return false;
-  });
-  return markerIndex + 1;
+  }
+  return markerIndex;
 };
 
 export const solvePartOne = (input: string) => findMarkerIndex(parseInput(input), 4);

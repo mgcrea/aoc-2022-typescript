@@ -8,6 +8,7 @@ const folders = (await readdir("./src", { withFileTypes: true }))
 
 const ROUNDS = process.env["ROUNDS"] ? Number(process.env["ROUNDS"]) : 1;
 const DAY = process.env["DAY"] ? Number(process.env["DAY"]) : undefined;
+const PART = process.env["PART"] ? Number(process.env["PART"]) : undefined;
 
 const run = <T extends unknown[], U>(fn: (...args: T) => U, ...args: T): void => {
   ROUNDS > 1 ? logBench(...bench(fn, ROUNDS, ...args)) : logPerf(...perf(fn, ...args));
@@ -49,11 +50,11 @@ for (const date of folders) {
     const input = await readFile("input", day);
     const code = await import(`./${date}/${date}`);
     console.log(`----------\n| Day ${date} |\n----------`);
-    if (code.solvePartOne) {
+    if (code.solvePartOne && PART !== 2) {
       console.log(`🎄 Part 1 🎄`);
       run(code.solvePartOne, input);
     }
-    if (code.solvePartTwo) {
+    if (code.solvePartTwo && PART !== 1) {
       console.log(`🎄 Part 2 🎄`);
       run(code.solvePartTwo, input);
     }
