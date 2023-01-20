@@ -27,3 +27,4 @@ dist-ssr
 
 # Project
 src/*/*.input.txt
+src/inputs

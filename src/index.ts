@@ -1,10 +1,11 @@
-import { readdir } from "fs/promises";
+import { readdir } from "node:fs/promises";
+import { parse } from "node:path";
 import { hrtime } from "node:process";
 import { readFile } from "./helpers";
 
-const folders = (await readdir("./src", { withFileTypes: true }))
-  .filter((entry) => entry.isDirectory())
-  .map(({ name }) => name);
+const files = (await readdir("./src/bin", { withFileTypes: true }))
+  .filter((entry) => entry.isFile())
+  .map(({ name }) => parse(name).name);
 
 const ROUNDS = process.env["ROUNDS"] ? Number(process.env["ROUNDS"]) : 1;
 const DAY = process.env["DAY"] ? Number(process.env["DAY"]) : undefined;
@@ -41,14 +42,15 @@ const logBench = (result: unknown, number: number, rounds: number) => {
   console.log(result, `(elapsed: ~${(number / rounds).toFixed(2)}µs for ${rounds} rounds)`);
 };
 
-for (const date of folders) {
+console.dir({ files });
+for (const date of files) {
   const day = Number(date);
   if (DAY && DAY !== day) {
     continue;
   }
   try {
     const input = await readFile("input", day);
-    const code = await import(`./${date}/${date}`);
+    const code = await import(`./bin/${date}`);
     console.log(`----------\n| Day ${date} |\n----------`);
     if (code.solvePartOne && PART !== 2) {
       console.log(`🎄 Part 1 🎄`);

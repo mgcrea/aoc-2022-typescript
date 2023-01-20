@@ -1,7 +1,6 @@
 ```sh
 export DAY=07
-mkdir src/${DAY}
-aoc download --overwrite --day ${DAY} --input-file src/${DAY}/${DAY}.input.txt --puzzle-file src/${DAY}/${DAY}.puzzle.md
-cp src/00/00.ts src/${DAY}/${DAY}.ts
-touch src/${DAY}/${DAY}.example.txt
+aoc download --overwrite --day ${DAY} --input-file src/inputs/${DAY}.txt --puzzle-file src/puzzles/${DAY}.md
+cp src/bin/00.ts src/bin/${DAY}.ts
+touch src/examples/${DAY}.txt
 ```
