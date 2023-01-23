@@ -31,8 +31,11 @@ globalThis.i = <T>(value: T, index: number): T => {
   return value;
 };
 
+globalThis.IS_TEST = process.env["NODE_ENV"] === "test";
+
 declare global {
   /* eslint-disable no-var */
   var d: (...args: unknown[]) => void;
   var i: <T>(value: T, index: number) => T;
+  var IS_TEST: boolean;
 }
