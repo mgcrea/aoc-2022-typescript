@@ -211,7 +211,7 @@ const debugGame = (game: Game) => {
       board[y]![x] = "H";
     }
   });
-  d(board);
+  // d(board);
 };
 
 // tests
