@@ -78,7 +78,20 @@ export const solvePartOne = (input: string) => {
   return total;
 };
 export const solvePartTwo = (input: string) => {
-  return null;
+  const parsedInput = parseInput(input);
+  parsedInput.forEach(execute);
+  const screen: ("." | "#")[] = [];
+  for (let cycle = 0; cycle < 240; cycle++) {
+    const y = cycle % 40;
+    const x = cpu.history[cycle + 1]!;
+    screen[cycle] = Math.abs(x - y) <= 1 ? "#" : ".";
+  }
+  let buffer = "";
+  for (let row = 0; row <= screen.length - 40; row += 40) {
+    buffer += screen.slice(row, row + 40).join("");
+    buffer += "\n";
+  }
+  return buffer;
 };
 
 // helpers
@@ -93,10 +106,18 @@ const sum = (array: number[]): number => array.reduce((a, b) => a + b);
 
 if (import.meta.vitest) {
   const input = await readFile("example", DAY);
-  test.only(`day #${DAY} part one`, () => {
+  test(`day #${DAY} part one`, () => {
     expect(solvePartOne(input)).toEqual(13140);
   });
   test(`day #${DAY} part two`, () => {
-    expect(solvePartTwo(input)).toEqual(null);
+    expect(solvePartTwo(input)).toMatchInlineSnapshot(`
+      "##..##..##..##..##..##..##..##..##..##..
+      ###...###...###...###...###...###...###.
+      ####....####....####....####....####....
+      #####.....#####.....#####.....#####.....
+      ######......######......######......####
+      #######.......#######.......#######.....
+      "
+    `);
   });
 }
