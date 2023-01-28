@@ -21,14 +21,14 @@ export const solvePartOne = (input: string) =>
 export const solvePartTwo = (input: string) =>
   parseInput(input)
     .map((value) => value.reduce(sum))
-    .sort((a, b) => b - a)
+    .sort(asc)
     .slice(0, 3)
     .reduce(sum);
 
 // helpers
 
 const sum = (a: number, b: number) => a + b;
-
+const asc = (a: number, b: number) => b - a;
 const max = (a: number, b: number) => (a > b ? a : b);
 
 // tests

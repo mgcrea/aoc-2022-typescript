@@ -1,31 +1,42 @@
 const DAY = 2;
 
-type Move = 0 | 1 | 2;
+enum Move {
+  Rock,
+  Paper,
+  Scissors,
+}
 type Round = [Move, Move];
-type Input = Round[];
 
-const parseInput = (input: string, safe?: boolean): Input =>
+enum Outcome {
+  Win,
+  Draw,
+  Loss,
+}
+type Strategy = [Move, Outcome];
+
+const parseInput = <T>(input: string, safe?: boolean): T =>
   input
     .split("\n")
     .filter(safe ? (line) => line.match(/^[ABC] [XYZ]$/) : Boolean)
-    .map((line) => [line.charCodeAt(0) - 65, line.charCodeAt(2) - 88]) as Input;
+    .map((line) => [line.charCodeAt(0) - 65, line.charCodeAt(2) - 88]) as T;
 
-const computeScore = ([a, b]: Round): number => {
-  const score = ((3 - ((2 + a - b) % 3)) % 3) * 3;
-  return score + b + 1;
+const computeScore = ([their, ours]: Round): number => {
+  const score = ((3 - ((2 + their - ours) % 3)) % 3) * 3;
+  return score + ours + 1;
 };
 
-export const solvePartOne = (input: string) => parseInput(input).map(computeScore).reduce(sum);
+export const solvePartOne = (input: string) =>
+  parseInput<Round[]>(input).map(computeScore).reduce(sum);
 
 export const solvePartTwo = (input: string) =>
-  parseInput(input)
-    .map(([a, r]) => {
-      const b = match(r, {
-        0: (a + 2) % 3,
-        1: a,
-        2: (a + 1) % 3,
+  parseInput<Strategy[]>(input)
+    .map(([their, outcome]) => {
+      const ours = match<Move>(outcome, {
+        [Outcome.Win]: (their + 2) % 3,
+        [Outcome.Draw]: their,
+        [Outcome.Loss]: (their + 1) % 3,
       });
-      return computeScore([a, b as Move]);
+      return computeScore([their, ours]);
     })
     .reduce(sum);
 
