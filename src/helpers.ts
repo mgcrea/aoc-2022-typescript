@@ -1,4 +1,5 @@
 import { readFile as fsReadFile } from "fs/promises";
+import { fsyncSync, writeSync } from "node:fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { inspect as baseInspect } from "util";
@@ -23,7 +24,8 @@ globalThis.d = (...args: unknown[]): void => {
   const time = new Date().toISOString();
   const output = inspect(args.length === 1 ? args[0] : args);
   // console.warn(`🚨 ${chalk.white.bgRed(time)} - ${chalk.red("break")}: ${inspected}`);
-  console.warn(`\n${time} - ${output}`);
+  writeSync(1, `\n${time} - ${output}`);
+  fsyncSync(1);
 };
 
 globalThis.i = <T>(value: T, index: number): T => {
@@ -38,4 +40,18 @@ declare global {
   var d: (...args: unknown[]) => void;
   var i: <T>(value: T, index: number) => T;
   var IS_TEST: boolean;
+}
+
+// types
+
+export type Tuple<T, N extends number, A extends unknown[] = []> = A extends { length: N }
+  ? A
+  : Tuple<T, N, [...A, T]>;
+declare global {
+  interface String {
+    split<N extends number | undefined>(
+      splitter: string,
+      limit?: N
+    ): N extends number ? Tuple<string, N> : string[];
+  }
 }
