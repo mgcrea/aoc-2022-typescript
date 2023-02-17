@@ -1,8 +1,8 @@
-import { readFile as fsReadFile } from "fs/promises";
 import { fsyncSync, writeSync } from "node:fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
-import { inspect as baseInspect } from "util";
+import { readFile as fsReadFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { inspect as baseInspect } from "node:util";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

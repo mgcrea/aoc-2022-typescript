@@ -7,7 +7,7 @@ This repository tracks my attempt to solve the [Advent of Code 2022](https://adv
 Download a new daily challenge:
 
 ```sh
-export DAY=11
+export DAY=12
 aoc download --overwrite --day ${DAY} --input-file src/inputs/${DAY}.txt --puzzle-file src/puzzles/${DAY}.md
 cp -u src/bin/00.ts src/bin/${DAY}.ts
 touch src/examples/${DAY}.txt
@@ -16,7 +16,7 @@ touch src/examples/${DAY}.txt
 Work on the new challenge:
 
 ```sh
-npm test src/bin/${DAY}.ts
+pnpm vitest src/bin/${DAY}.ts
 ```
 
 ## Benchmark
