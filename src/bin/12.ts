@@ -71,17 +71,13 @@ const parseInputAsGraph = (input: string, inverse = false): Graph => {
 
 export const solvePartOne = (input: string) => {
   const { start, end } = parseInputAsGraph(input);
-  // Create a set of all the unvisited nodes called the unvisited set
-  const unvisited = new Set<Node>();
-  runDijkstra(unvisited, start, end);
+  runDijkstra(start, end);
   return end.distance;
 };
 
 export const solvePartTwo = (input: string) => {
   const { matrix, end } = parseInputAsGraph(input, true);
-  // Create a set of all the unvisited nodes called the unvisited set
-  const unvisited = new Set<Node>();
-  runDijkstra(unvisited, end);
+  runDijkstra(end);
   // Find best start
   const { distance } = reduceMatrix(
     matrix,
@@ -103,10 +99,11 @@ export const solvePartTwo = (input: string) => {
  * {@link https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm}
  */
 const runDijkstra = (
-  unvisited: Set<Node>,
   currentNode: Node,
   endNode?: Node,
-  callback?: (prevNode: Node, nextNode: Node) => unknown
+  callback?: (prevNode: Node, nextNode: Node) => unknown,
+  // Create a set of all the unvisited nodes called the unvisited set
+  unvisited: Set<Node> = new Set<Node>()
 ): void => {
   // Consider all of its unvisited neighbors
   const neighbors = filterSet(
@@ -140,7 +137,7 @@ const runDijkstra = (
       return;
     }
   }
-  return runDijkstra(unvisited, nextNode, endNode, callback);
+  return runDijkstra(nextNode, endNode, callback, unvisited);
 };
 
 // const printMatrix = (matrix: Node[][], prev?: Node, next?: Node): void => {
