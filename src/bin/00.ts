@@ -2,7 +2,7 @@ const DAY = 0;
 
 type Input = string[];
 
-const parseInput = (input: string): Input => input.trim().split("\n\n");
+const parseInput = (input: string): Input => input.trim().split("\n");
 
 export const solvePartOne = (input: string) => {
   const parsedInput = parseInput(input);

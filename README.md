@@ -17,6 +17,7 @@ Work on the new challenge:
 
 ```sh
 pnpm vitest src/bin/${DAY}.ts
+pnpm solve
 ```
 
 ## Benchmark

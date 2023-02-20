@@ -22,7 +22,7 @@ const perf = <T extends unknown[], U>(fn: (...args: T) => U, ...args: T): [U, nu
   return [result, Number(end - start) / 1000];
 };
 const logPerf = (result: unknown, number: number) => {
-  console.log(result, `(elapsed: ${number.toFixed(2)}µs)`);
+  console.log(result, `(elapsed: ${humanizeTime(number)})`);
 };
 
 const bench = <T extends unknown[], U>(
@@ -39,10 +39,19 @@ const bench = <T extends unknown[], U>(
   return [result, Number(end - start) / 1000, rounds];
 };
 const logBench = (result: unknown, number: number, rounds: number) => {
-  console.log(result, `(elapsed: ~${(number / rounds).toFixed(2)}µs for ${rounds} rounds)`);
+  console.log(result, `(elapsed: ~${humanizeTime(number / rounds)} for ${rounds} rounds)`);
+};
+const humanizeTime = (time: number) => {
+  if (time > 1e6) {
+    return `${(time / 1e6).toFixed(2)}s`;
+  }
+  if (time > 1e3) {
+    return `${(time / 1e3).toFixed(2)}ms`;
+  }
+  return `${time.toFixed(2)}µs`;
 };
 
-console.dir({ files });
+// console.dir({ files });
 for (const date of files) {
   const day = Number(date);
   if (DAY && DAY !== day) {
