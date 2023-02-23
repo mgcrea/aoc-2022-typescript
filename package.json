@@ -10,6 +10,7 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "dev": "vitest src/bin/$(ls src/bin | tail -n1 | cut -c'1-2').ts",
+    "download": "DAY=$(ls src/bin | tail -n1 | cut -c'1-2') aoc download --overwrite --day ${DAY} --input-file src/inputs/${DAY}.txt --puzzle-file src/puzzles/${DAY}.md",
     "solve": "DAY=$(ls src/bin | tail -n1 | cut -c'1-2') npm start",
     "build": "tsup src/index.ts --format esm --sourcemap --dts --clean",
     "preview": "node --experimental-specifier-resolution=node --no-warnings dist/index.js",

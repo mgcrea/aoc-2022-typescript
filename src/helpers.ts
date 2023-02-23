@@ -1,4 +1,4 @@
-import { fsyncSync, writeSync } from "node:fs";
+import { fsyncSync, writeFileSync, writeSync } from "node:fs";
 import { readFile as fsReadFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -37,6 +37,8 @@ globalThis.i = <T>(value: T, index: number): T => {
   return value;
 };
 
+globalThis.f = (value: string) => writeFileSync(`./file.txt`, value);
+
 globalThis.IS_TEST = process.env["NODE_ENV"] === "test";
 
 declare global {
@@ -44,6 +46,7 @@ declare global {
   var d: (...args: unknown[]) => void;
   var i: <T>(value: T, index: number) => T;
   var p: (s: string) => void;
+  var f: (s: string) => void;
   var IS_TEST: boolean;
 }
 
